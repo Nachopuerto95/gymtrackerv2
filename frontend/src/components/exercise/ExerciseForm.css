@@ -1,0 +1,275 @@
+/* ========================================
+   ExerciseForm CSS - Design System
+   Consistent with HomePage styling
+   ======================================== */
+
+.exercise-form {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-lg, 1.5rem);
+}
+
+/* ===== FORM FIELDS ===== */
+.exercise-form-field {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-sm, 0.75rem);
+}
+
+.exercise-form-label {
+  font-size: var(--font-size-xs, 0.875rem);
+  font-weight: 500;
+  color: var(--color-text-secondary, #9CA3AF);
+  letter-spacing: 0.01em;
+}
+
+/* ===== INPUTS ===== */
+.exercise-form-input,
+.exercise-form-select,
+.exercise-form-textarea {
+  width: 100%;
+  padding: var(--space-sm, 0.75rem) var(--space-md, 1rem);
+  background-color: var(--color-bg-secondary, #1A1F2E);
+  border: 1px solid var(--color-border-default, #2D3748);
+  border-radius: var(--radius-md, 0.75rem);
+  color: var(--color-text-primary, #FFFFFF);
+  font-size: var(--font-size-sm, 1rem);
+  font-family: inherit;
+  outline: none;
+  transition: all var(--transition-base, 300ms ease);
+  box-sizing: border-box;
+  /* Touch target optimization */
+  min-height: var(--touch-target-min, 44px);
+}
+
+.exercise-form-input:hover,
+.exercise-form-select:hover,
+.exercise-form-textarea:hover {
+  border-color: rgba(0, 229, 204, 0.3);
+}
+
+.exercise-form-input:focus,
+.exercise-form-select:focus,
+.exercise-form-textarea:focus {
+  border-color: var(--color-accent-primary, #00E5CC);
+  box-shadow: 0 0 0 3px rgba(0, 229, 204, 0.1);
+}
+
+.exercise-form-input::placeholder,
+.exercise-form-textarea::placeholder {
+  color: var(--color-text-tertiary, #6B7280);
+}
+
+.exercise-form-input-error {
+  border-color: #EF4444 !important;
+}
+
+.exercise-form-input-error:focus {
+  box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.1);
+}
+
+/* ===== SELECT ===== */
+.exercise-form-select {
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%239CA3AF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+}
+
+.exercise-form-select option {
+  background-color: var(--color-bg-secondary, #1A1F2E);
+  color: var(--color-text-primary, #FFFFFF);
+  padding: var(--space-sm, 0.75rem);
+}
+
+/* ===== TEXTAREA ===== */
+.exercise-form-textarea {
+  resize: vertical;
+  min-height: 100px;
+  line-height: 1.6;
+}
+
+/* ===== MUSCLE SECTIONS ===== */
+.exercise-form-muscle-sections {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md, 1rem);
+  padding: var(--space-md, 1rem);
+  background-color: rgba(255, 255, 255, 0.02);
+  border-radius: var(--radius-lg, 1rem);
+  border: 1px solid var(--color-border-default, #2D3748);
+}
+
+.exercise-form-section-title {
+  font-size: var(--font-size-sm, 1rem);
+  font-weight: 600;
+  color: var(--color-text-primary, #FFFFFF);
+  margin: 0 0 var(--space-xs, 0.5rem) 0;
+}
+
+.exercise-form-muscle-header {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.exercise-form-muscle-description {
+  font-size: 0.75rem;
+  color: var(--color-text-tertiary, #6B7280);
+  font-weight: 400;
+}
+
+/* ===== MUSCLE GRID ===== */
+.exercise-form-muscle-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+}
+
+.exercise-form-muscle-chip {
+  /* Touch target optimization */
+  min-height: 32px;
+  padding: var(--space-xs, 0.5rem) var(--space-sm, 0.75rem);
+
+  /* Visual styling */
+  background-color: var(--color-bg-tertiary, #252B3A);
+  border: 1px solid var(--color-border-default, #2D3748);
+  border-radius: 9999px;
+  color: var(--color-text-secondary, #9CA3AF);
+
+  /* Typography */
+  font-size: 0.8125rem;
+  font-weight: 500;
+
+  /* Interaction */
+  cursor: pointer;
+  transition: all var(--transition-fast, 200ms ease);
+
+  /* Accessibility */
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+}
+
+.exercise-form-muscle-chip:hover:not(:disabled) {
+  border-color: rgba(0, 229, 204, 0.3);
+  color: var(--color-text-primary, #FFFFFF);
+}
+
+.exercise-form-muscle-chip:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+/* Disabled state */
+.exercise-form-muscle-chip-disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.exercise-form-muscle-chip-disabled:hover {
+  border-color: var(--color-border-default, #2D3748);
+  color: var(--color-text-secondary, #9CA3AF);
+}
+
+/* Primary muscle active state (100% - Cyan/Teal) */
+.exercise-form-muscle-chip-primary-active {
+  background: linear-gradient(135deg, var(--color-accent-primary, #00E5CC), #00B8A3);
+  color: var(--color-bg-primary, #0A0E12);
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(0, 229, 204, 0.3);
+}
+
+.exercise-form-muscle-chip-primary-active:hover:not(:disabled) {
+  color: var(--color-bg-primary, #0A0E12);
+}
+
+/* Secondary Strong active state (60% - Purple) */
+.exercise-form-muscle-chip-strong-active {
+  background: linear-gradient(135deg, #8B5CF6, #7C3AED);
+  color: var(--color-text-primary, #FFFFFF);
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.3);
+}
+
+.exercise-form-muscle-chip-strong-active:hover:not(:disabled) {
+  color: var(--color-text-primary, #FFFFFF);
+}
+
+/* Secondary Medium active state (40% - Blue) */
+.exercise-form-muscle-chip-medium-active {
+  background: linear-gradient(135deg, #3B82F6, #2563EB);
+  color: var(--color-text-primary, #FFFFFF);
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(59, 130, 246, 0.3);
+}
+
+.exercise-form-muscle-chip-medium-active:hover:not(:disabled) {
+  color: var(--color-text-primary, #FFFFFF);
+}
+
+/* Secondary Light active state (20% - Gray/Slate) */
+.exercise-form-muscle-chip-light-active {
+  background: linear-gradient(135deg, #64748B, #475569);
+  color: var(--color-text-primary, #FFFFFF);
+  border-color: transparent;
+  font-weight: 600;
+  box-shadow: 0 2px 8px rgba(100, 116, 139, 0.3);
+}
+
+.exercise-form-muscle-chip-light-active:hover:not(:disabled) {
+  color: var(--color-text-primary, #FFFFFF);
+}
+
+/* ===== ERROR MESSAGE ===== */
+.exercise-form-error {
+  font-size: 0.8125rem;
+  color: #EF4444;
+  margin-top: -0.25rem;
+}
+
+/* ===== ACTIONS ===== */
+.exercise-form-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: var(--space-sm, 0.75rem);
+  margin-top: var(--space-md, 1rem);
+  padding-top: var(--space-md, 1rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 375px) {
+  .exercise-form {
+    gap: var(--space-md, 1rem);
+  }
+
+  .exercise-form-input,
+  .exercise-form-select,
+  .exercise-form-textarea {
+    padding: var(--space-sm, 0.75rem);
+    font-size: 0.9375rem;
+  }
+
+  .exercise-form-muscle-chip {
+    padding: 0.375rem 0.625rem;
+    font-size: 0.75rem;
+    min-height: 28px;
+  }
+
+  .exercise-form-actions {
+    flex-direction: column-reverse;
+    gap: var(--space-sm, 0.75rem);
+  }
+
+  .exercise-form-actions button {
+    width: 100%;
+  }
+
+  .exercise-form-muscle-sections {
+    padding: var(--space-sm, 0.75rem);
+  }
+}

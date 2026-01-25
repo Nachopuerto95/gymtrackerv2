@@ -1,0 +1,281 @@
+/* MuscleRadarChart Styles */
+
+.muscle-radar-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(10, 14, 18, 0.95);
+  backdrop-filter: blur(8px);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  z-index: 9999;
+  padding: 16px;
+  padding-top: calc(16px + env(safe-area-inset-top, 0px));
+  padding-bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.muscle-radar-container {
+  background: #12161C;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 420px;
+  margin: auto;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.6);
+  flex-shrink: 0;
+}
+
+/* Header */
+.muscle-radar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  background: #12161C;
+  border-radius: 16px 16px 0 0;
+}
+
+.muscle-radar-header-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.muscle-radar-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.muscle-radar-icon svg {
+  width: 20px;
+  height: 20px;
+}
+
+.muscle-radar-title-section {
+  display: flex;
+  flex-direction: column;
+}
+
+.muscle-radar-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0;
+}
+
+.muscle-radar-subtitle {
+  font-size: 13px;
+  color: #9CA3AF;
+  margin: 2px 0 0 0;
+}
+
+.muscle-radar-close-btn {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #9CA3AF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.muscle-radar-close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.muscle-radar-close-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+/* Body */
+.muscle-radar-body {
+  padding: 20px;
+}
+
+/* Empty State */
+.muscle-radar-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.muscle-radar-empty-icon {
+  width: 48px;
+  height: 48px;
+  color: #4B5563;
+  margin-bottom: 16px;
+}
+
+.muscle-radar-empty-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  margin: 0 0 8px 0;
+}
+
+.muscle-radar-empty-subtitle {
+  font-size: 14px;
+  color: #9CA3AF;
+  margin: 0;
+}
+
+/* Summary Section */
+.muscle-radar-summary {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+  margin-bottom: 20px;
+}
+
+.muscle-radar-summary-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #9CA3AF;
+  margin-bottom: 12px;
+}
+
+.muscle-radar-top-muscles {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.muscle-radar-top-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.muscle-radar-top-rank {
+  width: 28px;
+  height: 28px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.muscle-radar-top-name {
+  flex: 1;
+  font-size: 14px;
+  color: #fff;
+}
+
+.muscle-radar-top-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #00D9FF;
+}
+
+/* Chart Container */
+.muscle-radar-chart-container {
+  height: 280px;
+  margin: 0 -10px;
+}
+
+/* Total Section */
+.muscle-radar-total {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  margin-top: 20px;
+}
+
+.muscle-radar-total-label {
+  font-size: 14px;
+  color: #9CA3AF;
+}
+
+.muscle-radar-total-value {
+  font-size: 18px;
+  font-weight: 700;
+}
+
+/* Info Box */
+.muscle-radar-info {
+  margin-top: 16px;
+  padding: 12px;
+  background: rgba(0, 217, 255, 0.05);
+  border: 1px solid rgba(0, 217, 255, 0.1);
+  border-radius: 8px;
+}
+
+.muscle-radar-info-text {
+  font-size: 12px;
+  color: #9CA3AF;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* Tooltip */
+.muscle-radar-tooltip {
+  background: #1A1F27;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  padding: 10px 14px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+}
+
+.muscle-radar-tooltip-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #fff;
+  margin: 0 0 4px 0;
+}
+
+.muscle-radar-tooltip-value {
+  font-size: 15px;
+  font-weight: 700;
+  color: #00D9FF;
+  margin: 0 0 2px 0;
+}
+
+.muscle-radar-tooltip-percent {
+  font-size: 11px;
+  color: #9CA3AF;
+  margin: 0;
+}
+
+/* Scrollbar styling */
+.muscle-radar-container::-webkit-scrollbar {
+  width: 6px;
+}
+
+.muscle-radar-container::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.muscle-radar-container::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 3px;
+}
+
+.muscle-radar-container::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

@@ -1,0 +1,91 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: none;
+  outline: none;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  font-weight: 600;
+  border-radius: 0.75rem;
+  transition: all 0.3s ease;
+}
+
+.btn span {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Sizes */
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  min-height: 36px;
+}
+
+.btn-md {
+  padding: 1rem 1.5rem;
+  font-size: 1rem;
+  min-height: 48px;
+}
+
+.btn-lg {
+  padding: 1.25rem 2rem;
+  font-size: 1.125rem;
+  min-height: 52px;
+}
+
+.btn-full-width {
+  width: 100%;
+}
+
+/* Variants */
+.btn-primary {
+  background: transparent;
+  color: #00E5CC;
+  border: 2px solid #00E5CC;
+  box-shadow: 0 0 15px rgba(0, 229, 204, 0.2);
+}
+
+.btn-primary:hover:not(:disabled) {
+  background: rgba(0, 229, 204, 0.1);
+  box-shadow: 0 0 20px rgba(0, 229, 204, 0.3);
+}
+
+.btn-secondary {
+  background: #1A1F2E;
+  color: #FFFFFF;
+  border: 1px solid #2D3748;
+}
+
+.btn-outline {
+  background: transparent;
+  color: #00E5CC;
+  border: 2px solid #00E5CC;
+}
+
+.btn-ghost {
+  background: transparent;
+  color: #FFFFFF;
+}
+
+.btn-danger {
+  background: #EF4444;
+  color: #FFFFFF;
+}
+
+.btn-loading-spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid currentColor;
+  border-top-color: transparent;
+  border-radius: 50%;
+}

@@ -1,0 +1,290 @@
+/* ========================================
+   ExerciseCard CSS - Design System
+   Consistent with HomePage styling
+   ======================================== */
+
+.exercise-card {
+  /* Visual styling - matches home-exercise-item */
+  background-color: var(--color-bg-secondary, #1A1F2E);
+  border-radius: var(--radius-md, 0.75rem);
+
+  /* Spacing */
+  padding: var(--space-md, 1rem);
+
+  /* Depth */
+  box-shadow: var(--shadow-sm, 0 1px 2px rgba(0, 0, 0, 0.05));
+
+  /* Interaction */
+  transition: all var(--transition-base, 300ms ease);
+}
+
+.exercise-card:hover {
+  border-color: rgba(0, 229, 204, 0.2);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.exercise-card-expandable {
+  cursor: pointer;
+}
+
+.exercise-card-expanded {
+  border-color: rgba(0, 229, 204, 0.3);
+}
+
+/* ===== HEADER ===== */
+.exercise-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--space-md, 1rem);
+}
+
+.exercise-card-title-section {
+  display: flex;
+  align-items: flex-start;
+  gap: var(--space-sm, 0.75rem);
+  flex: 1;
+  min-width: 0;
+}
+
+.exercise-card-category-indicator {
+  width: 4px;
+  height: 54px;
+  min-height: 40px;
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.exercise-card-info {
+  flex: 1;
+  min-width: 0;
+}
+
+.exercise-card-name {
+  font-size: var(--font-size-sm, 1rem);
+  font-weight: 600;
+  color: var(--color-text-primary, #FFFFFF);
+  line-height: 1.4;
+  margin: 0 0 var(--space-xs, 0.5rem) 0;
+  /* Truncate long names */
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* ===== BADGES ===== */
+.exercise-card-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-xs, 0.5rem);
+}
+
+.exercise-card-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.25rem 0.625rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1.2;
+  border: 1px solid;
+}
+
+.exercise-card-badge-category {
+  /* Colors applied via inline styles based on category */
+}
+
+.exercise-card-badge-equipment {
+  background-color: rgba(255, 255, 255, 0.05);
+  color: var(--color-text-secondary, #9CA3AF);
+  border-color: var(--color-border-default, #2D3748);
+}
+
+/* ===== ACTION BUTTONS ===== */
+.exercise-card-actions {
+  display: flex;
+  align-items: center;
+  gap: var(--space-xs, 0.5rem);
+  flex-shrink: 0;
+}
+
+.exercise-card-expand-indicator {
+  color: var(--color-text-tertiary, #6B7280);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: color 0.2s ease;
+}
+
+.exercise-card:hover .exercise-card-expand-indicator {
+  color: var(--color-text-secondary, #9CA3AF);
+}
+
+.exercise-card-action-btn {
+  /* Touch target optimization */
+  min-width: 36px;
+  min-height: 36px;
+
+  /* Visual styling */
+  background: transparent;
+  border: 1px solid var(--color-border-default, #2D3748);
+  border-radius: var(--radius-sm, 0.5rem);
+  color: var(--color-text-secondary, #9CA3AF);
+
+  /* Layout */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Interaction */
+  cursor: pointer;
+  transition: all var(--transition-fast, 200ms ease);
+
+  /* Accessibility */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.exercise-card-action-edit:hover {
+  border-color: var(--color-accent-primary, #00E5CC);
+  color: var(--color-accent-primary, #00E5CC);
+  background-color: rgba(0, 229, 204, 0.05);
+}
+
+.exercise-card-action-edit:active {
+  transform: scale(0.95);
+}
+
+.exercise-card-action-stats {
+  border-color: rgba(6, 182, 212, 0.3);
+  color: #06B6D4;
+}
+
+.exercise-card-action-stats:hover {
+  border-color: #06B6D4;
+  background-color: rgba(6, 182, 212, 0.1);
+}
+
+.exercise-card-action-stats:active {
+  transform: scale(0.95);
+}
+
+.exercise-card-action-delete {
+  border-color: rgba(239, 68, 68, 0.3);
+  color: #EF4444;
+}
+
+.exercise-card-action-delete:hover {
+  border-color: #EF4444;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.exercise-card-action-delete:active {
+  transform: scale(0.95);
+}
+
+/* ===== EXPANDABLE CONTENT ===== */
+.exercise-card-expandable-content {
+  overflow: hidden;
+}
+
+/* ===== BEST SET INFO ===== */
+.exercise-card-best-set {
+  margin-top: var(--space-md, 1rem);
+  padding: var(--space-sm, 0.75rem) var(--space-md, 1rem);
+  background: linear-gradient(135deg, rgba(6, 182, 212, 0.1) 0%, rgba(6, 182, 212, 0.05) 100%);
+  border-left: 3px solid #06B6D4;
+  border-radius: var(--radius-sm, 0.5rem);
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+
+  /* Mobile optimization */
+  -webkit-tap-highlight-color: transparent;
+}
+
+.exercise-card-best-set-label {
+  color: var(--color-text-tertiary, #6B7280);
+  font-size: 0.75rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.exercise-card-best-set-value {
+  color: #06B6D4;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.exercise-card-best-set-date {
+  color: var(--color-text-tertiary, #6B7280);
+  font-size: 0.6875rem;
+  margin-top: 0.125rem;
+}
+
+.exercise-card-best-set-separator {
+  color: var(--color-text-tertiary, #6B7280);
+  margin: 0.5rem 0 0.25rem 0;
+  font-size: 0.75rem;
+  opacity: 0.5;
+}
+
+/* ===== MUSCLE GROUPS ===== */
+.exercise-card-muscles {
+  margin-top: var(--space-md, 1rem);
+  padding-top: var(--space-md, 1rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-xs, 0.5rem);
+}
+
+.exercise-card-muscle-group {
+  display: flex;
+  gap: var(--space-sm, 0.75rem);
+  font-size: var(--font-size-xs, 0.875rem);
+  line-height: 1.5;
+}
+
+.exercise-card-muscle-label {
+  color: var(--color-text-tertiary, #6B7280);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.exercise-card-muscle-value {
+  color: var(--color-text-secondary, #9CA3AF);
+  text-transform: capitalize;
+}
+
+/* ===== DESCRIPTION ===== */
+.exercise-card-description {
+  margin: var(--space-md, 1rem) 0 0 0;
+  padding-top: var(--space-md, 1rem);
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+  font-size: var(--font-size-xs, 0.875rem);
+  color: var(--color-text-secondary, #9CA3AF);
+  line-height: 1.6;
+}
+
+/* ===== RESPONSIVE ADJUSTMENTS ===== */
+@media (max-width: 375px) {
+  .exercise-card {
+    padding: var(--space-sm, 0.75rem);
+  }
+
+  .exercise-card-name {
+    font-size: 0.9375rem;
+  }
+
+  .exercise-card-action-btn {
+    min-width: 32px;
+    min-height: 32px;
+  }
+
+  .exercise-card-badge {
+    padding: 0.1875rem 0.5rem;
+    font-size: 0.6875rem;
+  }
+}

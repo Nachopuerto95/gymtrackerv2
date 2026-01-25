@@ -1,0 +1,605 @@
+/* ========================================
+   CALENDAR PAGE - HISTORIAL
+   Enhanced look and feel
+   ======================================== */
+
+.calendar-refreshing {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem;
+  color: #00E5CC;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.calendar-container {
+  min-height: 100vh;
+  background-color: #0A0E12;
+  padding: 1.5rem;
+  padding-bottom: 6rem;
+}
+
+/* ========================================
+   HEADER
+   ======================================== */
+.calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-title {
+  font-size: var(--font-size-lg, 1.5rem);
+  font-weight: 700;
+  color: var(--color-text-primary, #FFFFFF);
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+
+/* ========================================
+   STATS CARDS - Enhanced with gradients
+   ======================================== */
+.calendar-stats-container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-stat-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 1.25rem 0.75rem!important;
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s ease, box-shadow 0.3s ease;
+}
+
+.calendar-stat-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  border-radius: 3px 3px 0 0;
+}
+
+.calendar-stat-card:hover {
+  transform: translateY(-2px);
+}
+
+/* Primary stat card (Este mes) */
+.calendar-stat-card-primary::before {
+  background: linear-gradient(90deg, #00D9FF, #00A8CC);
+}
+
+.calendar-stat-card-primary:hover {
+  box-shadow: 0 8px 25px rgba(0, 217, 255, 0.15);
+}
+
+/* Warning stat card (Racha) */
+.calendar-stat-card-warning::before {
+  background: linear-gradient(90deg, #FBBF24, #F59E0B);
+}
+
+.calendar-stat-card-warning:hover {
+  box-shadow: 0 8px 25px rgba(245, 158, 11, 0.15);
+}
+
+/* Success stat card (Total) */
+.calendar-stat-card-success::before {
+  background: linear-gradient(90deg, #34D399, #10B981);
+}
+
+.calendar-stat-card-success:hover {
+  box-shadow: 0 8px 25px rgba(16, 185, 129, 0.15);
+}
+
+/* Icon wrapper */
+.calendar-stat-icon-wrapper {
+  width: 35px!important;
+  height:35px!important;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.45rem;
+}
+
+.calendar-stat-icon-primary {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.2), rgba(0, 168, 204, 0.1));
+  color: #00D9FF;
+}
+
+.calendar-stat-icon-warning {
+  background: linear-gradient(135deg, rgba(251, 191, 36, 0.2), rgba(245, 158, 11, 0.1));
+  color: #FBBF24;
+}
+
+.calendar-stat-icon-success {
+  background: linear-gradient(135deg, rgba(52, 211, 153, 0.2), rgba(16, 185, 129, 0.1));
+  color: #34D399;
+}
+
+.calendar-stat-value {
+  font-size: 1.25rem!important;
+  font-weight: 800;
+  color: #FFFFFF;
+  margin-bottom: 0.25rem;
+  line-height: 1;
+}
+
+.calendar-stat-label {
+  font-size: 0.45rem;
+  color: #9CA3AF;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ========================================
+   CALENDAR CARD
+   ======================================== */
+.calendar-calendar-card {
+  margin-bottom: 1.5rem;
+  overflow: hidden;
+}
+
+.calendar-calendar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.calendar-month-year-container {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.calendar-month-year {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  text-transform: capitalize;
+}
+
+.calendar-today-button {
+  padding: 0.375rem 0.875rem;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: #00E5CC;
+  background-color: rgba(0, 229, 204, 0.1);
+  border: 1px solid rgba(0, 229, 204, 0.3);
+  border-radius: 20px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calendar-today-button:hover {
+  background-color: rgba(0, 229, 204, 0.2);
+  border-color: #00E5CC;
+}
+
+.calendar-nav-button {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: #FFFFFF;
+  cursor: pointer;
+  border-radius: 10px;
+  transition: all 0.2s ease;
+}
+
+.calendar-nav-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  transform: scale(1.05);
+}
+
+.calendar-nav-button:active {
+  transform: scale(0.95);
+}
+
+/* Day names row */
+.calendar-day-names-row {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.calendar-day-name {
+  text-align: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: #6B7280;
+  padding: 0.5rem 0;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* Calendar grid */
+.calendar-calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+.calendar-empty-day {
+  aspect-ratio: 1;
+}
+
+.calendar-day-cell {
+  aspect-ratio: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(26, 31, 46, 0.5);
+  border-radius: 8px;
+  cursor: pointer;
+  position: relative;
+  transition: all 0.2s ease;
+  border: 1px solid transparent;
+}
+
+.calendar-day-cell:hover {
+  background-color: rgba(26, 31, 46, 0.8);
+}
+
+.calendar-day-cell-with-workout {
+  background: linear-gradient(135deg, rgba(0, 229, 204, 0.15), rgba(0, 229, 204, 0.05));
+  border: 1px solid rgba(0, 229, 204, 0.4);
+  box-shadow: 0 0 15px rgba(0, 229, 204, 0.1);
+}
+
+.calendar-day-cell-with-workout:hover {
+  background: linear-gradient(135deg, rgba(0, 229, 204, 0.25), rgba(0, 229, 204, 0.1));
+  box-shadow: 0 0 20px rgba(0, 229, 204, 0.2);
+}
+
+.calendar-today-cell {
+  border: 2px solid #00E5CC !important;
+  box-shadow: 0 0 10px rgba(0, 229, 204, 0.3);
+}
+
+.calendar-day-number {
+  font-size: 0.8rem;
+  color: #FFFFFF;
+  font-weight: 500;
+  text-align: center;
+}
+
+.calendar-workout-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.125rem;
+  margin-top: 0.125rem;
+}
+
+.calendar-workout-count {
+  font-size: 0.5rem;
+  color: #9CA3AF;
+  font-weight: 600;
+}
+
+/* ========================================
+   WORKOUT DETAILS CARD
+   ======================================== */
+.calendar-workout-details-card {
+  margin-top: 1.5rem;
+  background: linear-gradient(180deg, rgba(26, 31, 46, 0.8), rgba(18, 22, 28, 0.9));
+  border: 1px solid rgba(0, 229, 204, 0.2);
+}
+
+.calendar-workout-details-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+.calendar-workout-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #FFFFFF;
+  margin-bottom: 0.375rem;
+}
+
+.calendar-workout-date {
+  font-size: 0.875rem;
+  color: #9CA3AF;
+  text-transform: capitalize;
+}
+
+.calendar-close-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  color: #9CA3AF;
+  cursor: pointer;
+  font-size: 1rem;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.calendar-close-button:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #FFFFFF;
+}
+
+/* Workout metrics */
+.calendar-workout-metrics {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.calendar-metric {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: #D1D5DB;
+  font-weight: 500;
+}
+
+.calendar-metric-label {
+  font-size: 0.875rem;
+  color: #D1D5DB;
+  font-weight: 500;
+}
+
+/* Muscle Radar Button */
+.calendar-muscle-radar-btn {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.15), rgba(0, 217, 255, 0.05));
+  border: 1px solid rgba(0, 217, 255, 0.3);
+  border-radius: 8px;
+  color: #00D9FF;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  -webkit-tap-highlight-color: transparent;
+  flex-shrink: 0;
+  margin-left: auto;
+}
+
+.calendar-muscle-radar-btn:hover {
+  background: linear-gradient(135deg, rgba(0, 217, 255, 0.25), rgba(0, 217, 255, 0.1));
+  border-color: #00D9FF;
+  box-shadow: 0 0 15px rgba(0, 217, 255, 0.3);
+  transform: scale(1.05);
+}
+
+.calendar-muscle-radar-btn:active {
+  transform: scale(0.95);
+}
+
+/* ========================================
+   EXERCISES LIST - Enhanced with category colors
+   ======================================== */
+.calendar-exercises-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.calendar-exercise-item {
+  padding: 1rem;
+  background: linear-gradient(135deg, rgba(26, 31, 46, 0.9), rgba(18, 22, 28, 0.95));
+  border-radius: 12px;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.2s ease;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+v
+
+.calendar-exercise-item:hover {
+  transform: translateX(4px);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+}
+
+.calendar-exercise-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  user-select: none;
+  position: relative;
+  z-index: 1;
+}
+
+.calendar-exercise-header-left {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.calendar-exercise-title-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.calendar-exercise-name {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #FFFFFF;
+}
+
+.calendar-exercise-category-badge {
+  font-size: 0.625rem;
+  font-weight: 600;
+  padding: 0.25rem 0.5rem;
+  border-radius: 6px;
+  border: 1px solid;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.calendar-exercise-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.calendar-exercise-sets {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8rem;
+  color: #9CA3AF;
+  font-weight: 500;
+}
+
+.calendar-exercise-volume {
+  font-size: 0.75rem;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.calendar-chevron-icon {
+  display: flex;
+  align-items: center;
+  color: #6B7280;
+  padding: 0.25rem;
+  transition: color 0.2s ease;
+}
+
+.calendar-exercise-item:hover .calendar-chevron-icon {
+  color: #9CA3AF;
+}
+
+/* ========================================
+   SETS LIST - Enhanced with stagger animations
+   ======================================== */
+.calendar-sets-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-top: 0.75rem;
+  padding-top: 0.75rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.calendar-set-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 1rem;
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.15));
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.calendar-set-item:hover {
+  background: linear-gradient(90deg, rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.2));
+  transform: translateX(4px);
+}
+
+.calendar-set-number {
+  font-size: 0.8rem;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.calendar-set-value {
+  font-size: 0.875rem;
+  color: #D1D5DB;
+}
+
+.calendar-set-value strong {
+  color: #FFFFFF;
+  font-weight: 700;
+}
+
+/* ========================================
+   RESPONSIVE ADJUSTMENTS
+   ======================================== */
+@media (max-width: 380px) {
+  .calendar-container {
+    padding: 1rem;
+  }
+
+  .calendar-stats-container {
+    gap: 0.5rem;
+  }
+
+  .calendar-stat-card {
+    padding: 1rem 0.5rem;
+  }
+
+  .calendar-stat-value {
+    font-size: 1.5rem;
+  }
+
+  .calendar-stat-icon-wrapper {
+    width: 36px;
+    height: 36px;
+  }
+
+  .calendar-workout-metrics {
+    flex-wrap: wrap;
+    gap: 0.75rem;
+  }
+}
+
+/* ========================================
+   ANIMATIONS
+   ======================================== */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(0, 229, 204, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(0, 229, 204, 0.4);
+  }
+}
+
+.calendar-today-cell {
+  animation: pulse-glow 2s ease-in-out infinite;
+}
+
+@keyframes slide-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.calendar-workout-details-card {
+  animation: slide-up 0.3s ease-out;
+}

@@ -1,0 +1,46 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* PWA Safe Areas para Dynamic Island y Home Indicator */
+html {
+  /* Permite que el contenido se extienda a áreas seguras */
+  /* Removido padding para evitar scroll inicial en móvil */
+  /* El padding de safe areas se maneja en cada contenedor individualmente */
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: #0A0E12;
+  color: #FFFFFF;
+  /* Previene el scroll bouncing en iOS */
+  overscroll-behavior: none;
+  /* Asegura que el fondo cubra toda la pantalla */
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  /* Fuerza el scroll a empezar desde arriba */
+  overflow-x: hidden;
+  position: relative;
+}
+
+#root {
+  min-height: 100vh;
+  min-height: -webkit-fill-available;
+  /* Asegura que el contenido empiece desde arriba */
+  position: relative;
+  overflow-x: hidden;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+input[type="number"] {
+  -moz-appearance: textfield;
+}

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- iOS PWA icons -->
+    <link rel="apple-touch-icon" href="/icons/icon-152x152.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/icons/icon-192x192.png" />
+
+    <!-- Splash screens para iOS -->
+    <meta name="apple-mobile-web-app-title" content="GymTracker" />
+
+    <!-- Mobile optimizations -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+
+    <!-- Theme color for dark mode -->
+    <meta name="theme-color" content="#0A0E12" />
+
+    <title>GymTracker - Fitness Tracking App</title>
+    <meta name="description" content="Track your workouts, routines, and progress with GymTracker" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+
+    <!-- iOS PWA standalone mode fix -->
+    <script>
+      (function() {
+        // Detect if running as installed PWA on iOS
+        var isIOS = /iphone|ipad|ipod/.test(navigator.userAgent.toLowerCase());
+        var isStandalone = window.navigator.standalone === true;
+
+        // If iOS standalone mode and not on the start URL, redirect to preserve navigation
+        if (isIOS && isStandalone && window.location.pathname !== '/') {
+          // Store intended destination
+          sessionStorage.setItem('pwa_redirect', window.location.pathname);
+        }
+
+        // On app load, check if we need to redirect to intended page
+        if (isIOS && isStandalone) {
+          var redirect = sessionStorage.getItem('pwa_redirect');
+          if (redirect) {
+            sessionStorage.removeItem('pwa_redirect');
+            // Small delay to let React mount
+            setTimeout(function() {
+              window.history.pushState({}, '', redirect);
+              window.dispatchEvent(new PopStateEvent('popstate'));
+            }, 100);
+          }
+        }
+
+        if (isIOS && isStandalone) {
+          // Intercept all clicks to prevent Safari from opening
+          document.addEventListener('click', function(e) {
+            var target = e.target;
+
+            // Find the closest anchor tag
+            while (target && target.tagName !== 'A') {
+              target = target.parentNode;
+            }
+
+            // If it's an internal link, use history API instead
+            if (target && target.tagName === 'A') {
+              var href = target.getAttribute('href');
+
+              // Only handle internal links (same origin, not external)
+              if (href &&
+                  !href.startsWith('http') &&
+                  !href.startsWith('//') &&
+                  !href.startsWith('mailto:') &&
+                  !href.startsWith('tel:') &&
+                  target.getAttribute('target') !== '_blank') {
+                e.preventDefault();
+                window.location.href = href;
+              }
+            }
+          }, true);
+        }
+      })();
+    </script>
+
+    <!-- Registrar Service Worker -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then((registration) => {
+              console.log('SW registrado:', registration.scope);
+            })
+            .catch((error) => {
+              console.log('Error registrando SW:', error);
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
