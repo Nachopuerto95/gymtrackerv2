@@ -112,6 +112,7 @@ export const workoutsAPI = {
   update: (id, data) => api.put(`/workouts/${id}`, data),
   complete: (id) => api.put(`/workouts/${id}/complete`),
   reopen: (id) => api.put(`/workouts/${id}/reopen`),
+  editHistory: (id, data) => api.put(`/workouts/${id}/edit-history`, data),
   changeDay: (id, data) => api.put(`/workouts/${id}/change-day`, data),
   delete: (id) => api.delete(`/workouts/${id}`),
   getExerciseAnalytics: (exerciseId, params) =>

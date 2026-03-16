@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 import { AnimatePresence } from 'framer-motion';
-import { ChevronLeft, ChevronRight, Dumbbell, Clock, TrendingUp, Calendar as CalendarIcon, Flame, Award, ChevronDown, Zap, Activity } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Dumbbell, Clock, TrendingUp, Calendar as CalendarIcon, Flame, Award, ChevronDown, Zap, Activity, Pencil, Save, X, Trash2 } from 'lucide-react';
 import useWorkoutStore from '../store/workoutStore';
 import useRoutineStore from '../store/routineStore';
 import Card from '../components/common/Card';
@@ -14,13 +14,15 @@ import { CATEGORY_COLORS, CATEGORY_LABELS } from '../constants/categories';
 import './CalendarPage.css';
 
 const CalendarPage = () => {
-  const { workoutHistory, fetchWorkoutHistory } = useWorkoutStore();
+  const { workoutHistory, fetchWorkoutHistory, editHistoryWorkout } = useWorkoutStore();
   const { activeRoutine, fetchActiveRoutine } = useRoutineStore();
   const { exercises, fetchExercises, getExerciseDataMap } = useExerciseStore();
   const [currentDate, setCurrentDate] = useState(new Date());
   const [selectedWorkout, setSelectedWorkout] = useState(null);
   const [expandedExercises, setExpandedExercises] = useState({});
   const [showMuscleRadar, setShowMuscleRadar] = useState(false);
+  const [isEditing, setIsEditing] = useState(false);
+  const [editedExercises, setEditedExercises] = useState([]);
 
   useEffect(() => {
     fetchWorkoutHistory();
@@ -75,8 +77,65 @@ const CalendarPage = () => {
 
   const selectWorkout = (workout) => {
     setSelectedWorkout(workout);
+    setIsEditing(false);
+    setEditedExercises([]);
     // Reset expanded state - all exercises collapsed by default
     setExpandedExercises({});
+  };
+
+  const startEditing = () => {
+    setIsEditing(true);
+    // Deep clone exercises for editing
+    setEditedExercises(JSON.parse(JSON.stringify(selectedWorkout.exercises)));
+    // Expand all exercises for editing
+    const allExpanded = {};
+    selectedWorkout.exercises.forEach((_, index) => {
+      allExpanded[index] = true;
+    });
+    setExpandedExercises(allExpanded);
+  };
+
+  const cancelEditing = () => {
+    setIsEditing(false);
+    setEditedExercises([]);
+  };
+
+  const saveEditing = async () => {
+    const result = await editHistoryWorkout(selectedWorkout._id, editedExercises);
+    if (result.success) {
+      setSelectedWorkout(result.workout);
+      setIsEditing(false);
+      setEditedExercises([]);
+      toast.success('Historial actualizado');
+    } else {
+      toast.error('Error al guardar cambios');
+    }
+  };
+
+  const updateEditedSet = (exerciseIndex, setIndex, field, value) => {
+    setEditedExercises(prev => {
+      const updated = [...prev];
+      updated[exerciseIndex] = { ...updated[exerciseIndex] };
+      updated[exerciseIndex].sets = [...updated[exerciseIndex].sets];
+      updated[exerciseIndex].sets[setIndex] = {
+        ...updated[exerciseIndex].sets[setIndex],
+        [field]: parseFloat(value) || 0
+      };
+      return updated;
+    });
+  };
+
+  const removeEditedExercise = (exerciseIndex) => {
+    setEditedExercises(prev => prev.filter((_, i) => i !== exerciseIndex));
+  };
+
+  const removeEditedSet = (exerciseIndex, setIndex) => {
+    setEditedExercises(prev => {
+      const updated = [...prev];
+      updated[exerciseIndex] = { ...updated[exerciseIndex] };
+      updated[exerciseIndex].sets = updated[exerciseIndex].sets.filter((_, i) => i !== setIndex);
+      return updated;
+    });
   };
 
   const formatDuration = (seconds) => {
@@ -289,12 +348,40 @@ const CalendarPage = () => {
                   })}
                 </p>
               </div>
-              <button
-                onClick={() => setSelectedWorkout(null)}
-                className="calendar-close-button"
-              >
-                ✕
-              </button>
+              <div className="calendar-header-actions">
+                {!isEditing ? (
+                  <button
+                    onClick={startEditing}
+                    className="calendar-edit-button"
+                    title="Editar entrenamiento"
+                  >
+                    <Pencil size={16} />
+                  </button>
+                ) : (
+                  <>
+                    <button
+                      onClick={saveEditing}
+                      className="calendar-save-button"
+                      title="Guardar cambios"
+                    >
+                      <Save size={16} />
+                    </button>
+                    <button
+                      onClick={cancelEditing}
+                      className="calendar-cancel-edit-button"
+                      title="Cancelar edición"
+                    >
+                      <X size={16} />
+                    </button>
+                  </>
+                )}
+                <button
+                  onClick={() => { setSelectedWorkout(null); setIsEditing(false); }}
+                  className="calendar-close-button"
+                >
+                  ✕
+                </button>
+              </div>
             </div>
 
             <div className="calendar-workout-metrics">
@@ -319,7 +406,7 @@ const CalendarPage = () => {
             </div>
 
             <div className="calendar-exercises-list">
-              {selectedWorkout.exercises.map((exercise, index) => {
+              {(isEditing ? editedExercises : selectedWorkout.exercises).map((exercise, index) => {
                 const isExpanded = expandedExercises[index];
                 const categoryColor = CATEGORY_COLORS[exercise.category] || CATEGORY_COLORS.other;
                 const categoryLabel = CATEGORY_LABELS[exercise.category] || exercise.category;
@@ -365,11 +452,25 @@ const CalendarPage = () => {
                           </span>
                         </div>
                       </div>
-                      <div
-                        className="calendar-chevron-icon"
-                        style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
-                      >
-                        <ChevronDown size={20} />
+                      <div className="calendar-exercise-header-right-actions">
+                        {isEditing && (
+                          <button
+                            className="calendar-delete-exercise-btn"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              removeEditedExercise(index);
+                            }}
+                            title="Eliminar ejercicio"
+                          >
+                            <Trash2 size={14} />
+                          </button>
+                        )}
+                        <div
+                          className="calendar-chevron-icon"
+                          style={{ transform: isExpanded ? 'rotate(180deg)' : 'rotate(0deg)' }}
+                        >
+                          <ChevronDown size={20} />
+                        </div>
                       </div>
                     </div>
                     {isExpanded && (
@@ -380,9 +481,39 @@ const CalendarPage = () => {
                             className="calendar-set-item"
                           >
                             <span className="calendar-set-number">Serie {setIndex + 1}</span>
-                            <span className="calendar-set-value">
-                              <strong>{set.weight}</strong> kg × <strong>{set.reps}</strong> reps
-                            </span>
+                            {isEditing ? (
+                              <div className="calendar-set-edit-inputs">
+                                <input
+                                  type="number"
+                                  inputMode="decimal"
+                                  className="calendar-set-input"
+                                  value={set.weight}
+                                  onChange={(e) => updateEditedSet(index, setIndex, 'weight', e.target.value)}
+                                  placeholder="kg"
+                                />
+                                <span className="calendar-set-input-separator">kg ×</span>
+                                <input
+                                  type="number"
+                                  inputMode="numeric"
+                                  className="calendar-set-input"
+                                  value={set.reps}
+                                  onChange={(e) => updateEditedSet(index, setIndex, 'reps', e.target.value)}
+                                  placeholder="reps"
+                                />
+                                <span className="calendar-set-input-separator">reps</span>
+                                <button
+                                  className="calendar-delete-set-btn"
+                                  onClick={() => removeEditedSet(index, setIndex)}
+                                  title="Eliminar serie"
+                                >
+                                  <Trash2 size={12} />
+                                </button>
+                              </div>
+                            ) : (
+                              <span className="calendar-set-value">
+                                <strong>{set.weight}</strong> kg × <strong>{set.reps}</strong> reps
+                              </span>
+                            )}
                           </div>
                         ))}
                       </div>

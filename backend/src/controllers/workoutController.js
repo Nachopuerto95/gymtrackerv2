@@ -970,6 +970,49 @@ export const cleanupDuplicateSessions = async (req, res) => {
   }
 };
 
+// @desc    Edit a completed workout session (fix mistakes in history)
+// @route   PUT /api/workouts/:id/edit-history
+// @access  Private
+export const editHistoryWorkout = async (req, res) => {
+  try {
+    const workout = await WorkoutSession.findById(req.params.id);
+
+    if (!workout) {
+      return res.status(404).json({
+        success: false,
+        message: 'Workout not found'
+      });
+    }
+
+    // Check ownership
+    if (workout.userId.toString() !== req.user.id) {
+      return res.status(403).json({
+        success: false,
+        message: 'Not authorized to edit this workout'
+      });
+    }
+
+    // Update exercises with the new data
+    if (req.body.exercises) {
+      workout.exercises = req.body.exercises;
+    }
+
+    // Save triggers pre-save hook to recalculate totals
+    await workout.save();
+
+    res.status(200).json({
+      success: true,
+      data: workout
+    });
+  } catch (error) {
+    console.error('Error editing workout history:', error);
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
 // @desc    Get exercise history (last weight and reps) for placeholder suggestions
 // @route   GET /api/workouts/exercise-history/:exerciseId
 // @access  Private

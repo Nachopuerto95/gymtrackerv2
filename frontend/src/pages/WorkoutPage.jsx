@@ -49,7 +49,7 @@ const WorkoutPage = () => {
     removeSetFromExercise,
     fetchWorkout
   } = useWorkoutStore();
-  const { activeRoutine, fetchActiveRoutine } = useRoutineStore();
+  const { activeRoutine, fetchActiveRoutine, updateRoutine } = useRoutineStore();
   const { exercises: allExercises, fetchExercises, getExerciseDataMap } = useExerciseStore();
   const { user } = useAuthStore();
 
@@ -66,6 +66,8 @@ const WorkoutPage = () => {
   const [selectedSets, setSelectedSets] = useState(3);
   const [showMuscleRadar, setShowMuscleRadar] = useState(false);
   const [showBodyWeightModal, setShowBodyWeightModal] = useState(false);
+  const [showUpdateRoutineModal, setShowUpdateRoutineModal] = useState(false);
+  const [pendingCompleteWorkout, setPendingCompleteWorkout] = useState(null);
 
   // Memoize exerciseDataMap to prevent infinite re-renders in MuscleRadarChart
   const exerciseDataMap = useMemo(() => {
@@ -231,14 +233,110 @@ const WorkoutPage = () => {
     }
   };
 
+  const checkExerciseDifferences = () => {
+    if (!activeRoutine || !activeWorkout) return false;
+
+    const workoutDay = activeRoutine.workoutDays.find(
+      day => day._id === activeWorkout.workoutDayId
+    );
+    if (!workoutDay) return false;
+
+    // Get exercise IDs from the routine day
+    const routineExerciseIds = workoutDay.exercises
+      .map(ex => ex.exerciseId?.toString())
+      .filter(Boolean)
+      .sort();
+
+    // Get exercise IDs from the workout (only those with completed sets)
+    const workoutExerciseIds = activeWorkout.exercises
+      .filter(ex => ex.sets.some(s => s.isCompleted))
+      .map(ex => ex.exerciseId?.toString())
+      .filter(Boolean)
+      .sort();
+
+    // Check if they're different
+    if (routineExerciseIds.length !== workoutExerciseIds.length) return true;
+    return routineExerciseIds.some((id, i) => id !== workoutExerciseIds[i]);
+  };
+
   const handleCompleteWorkout = async () => {
     try {
-      await completeWorkout(activeWorkout._id);
-      toast.success('Entrenamiento completado!');
-      navigate('/');
+      // Check if exercises differ from routine before completing
+      const hasDifferences = checkExerciseDifferences();
+
+      const result = await completeWorkout(activeWorkout._id);
+
+      if (result.success && hasDifferences) {
+        setPendingCompleteWorkout(result.workout);
+        setShowUpdateRoutineModal(true);
+      } else {
+        toast.success('Entrenamiento completado!');
+        navigate('/');
+      }
     } catch (error) {
       toast.error('Error al completar el entrenamiento');
     }
+  };
+
+  const handleUpdateRoutine = async () => {
+    if (!activeRoutine || !pendingCompleteWorkout) {
+      navigate('/');
+      return;
+    }
+
+    const workoutDay = activeRoutine.workoutDays.find(
+      day => day._id === pendingCompleteWorkout.workoutDayId
+    );
+    if (!workoutDay) {
+      toast.success('Entrenamiento completado!');
+      navigate('/');
+      return;
+    }
+
+    // Build updated exercises from the completed workout
+    const updatedExercises = pendingCompleteWorkout.exercises.map((ex, index) => ({
+      exerciseId: ex.exerciseId,
+      exerciseName: ex.exerciseName,
+      category: ex.category || 'other',
+      equipment: ex.equipment || 'other',
+      sets: ex.sets.length,
+      repsRange: {
+        min: Math.min(...ex.sets.map(s => s.reps)),
+        max: Math.max(...ex.sets.map(s => s.reps))
+      },
+      restTime: workoutDay.exercises[index]?.restTime || 90,
+      notes: '',
+      order: index + 1
+    }));
+
+    // Update the routine's workout day
+    const updatedDays = activeRoutine.workoutDays.map(day => {
+      if (day._id === pendingCompleteWorkout.workoutDayId) {
+        return { ...day, exercises: updatedExercises };
+      }
+      return day;
+    });
+
+    const result = await updateRoutine(activeRoutine._id, {
+      workoutDays: updatedDays
+    });
+
+    if (result.success) {
+      toast.success('Rutina actualizada!');
+    } else {
+      toast.error('Error al actualizar rutina');
+    }
+
+    setShowUpdateRoutineModal(false);
+    setPendingCompleteWorkout(null);
+    navigate('/');
+  };
+
+  const handleSkipUpdateRoutine = () => {
+    setShowUpdateRoutineModal(false);
+    setPendingCompleteWorkout(null);
+    toast.success('Entrenamiento completado!');
+    navigate('/');
   };
 
   const handleCancelWorkout = async () => {
@@ -632,6 +730,31 @@ const WorkoutPage = () => {
         isOpen={showBodyWeightModal}
         onClose={() => setShowBodyWeightModal(false)}
       />
+
+      {/* Update Routine Modal */}
+      <Modal
+        isOpen={showUpdateRoutineModal}
+        onClose={handleSkipUpdateRoutine}
+        title="Actualizar rutina"
+        size="sm"
+      >
+        <div className="workout-cancel-confirm">
+          <p className="workout-cancel-text">
+            Los ejercicios de este entrenamiento son diferentes a los de tu rutina.
+          </p>
+          <p className="workout-cancel-warning">
+            ¿Quieres actualizar la rutina con los ejercicios de hoy?
+          </p>
+          <div className="workout-cancel-actions">
+            <Button variant="ghost" onClick={handleSkipUpdateRoutine}>
+              No, mantener
+            </Button>
+            <Button variant="primary" onClick={handleUpdateRoutine}>
+              Actualizar rutina
+            </Button>
+          </div>
+        </div>
+      </Modal>
     </div>
   );
 };

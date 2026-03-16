@@ -109,6 +109,14 @@ const useWorkoutStore = create((set, get) => ({
   completeWorkout: async (workoutId) => {
     set({ isLoading: true, error: null });
     try {
+      // Save current frontend state to backend before completing
+      // This ensures any pending fire-and-forget updates from updateSet
+      // are persisted before the complete endpoint filters exercises
+      const currentWorkout = get().activeWorkout;
+      if (currentWorkout) {
+        await workoutsAPI.update(workoutId, currentWorkout);
+      }
+
       const response = await workoutsAPI.complete(workoutId);
       const workout = response.data.data;
 
@@ -551,6 +559,27 @@ const useWorkoutStore = create((set, get) => ({
     workoutsAPI.update(workout._id, updatedWorkout).catch(error => {
       console.error('Error updating workout:', error);
     });
+  },
+
+  // Edit a completed workout in history (fix mistakes)
+  editHistoryWorkout: async (workoutId, exercises) => {
+    set({ isLoading: true, error: null });
+    try {
+      const response = await workoutsAPI.editHistory(workoutId, { exercises });
+      const updatedWorkout = response.data.data;
+
+      // Update in history
+      const history = get().workoutHistory.map(w =>
+        w._id === workoutId ? updatedWorkout : w
+      );
+      set({ workoutHistory: history, isLoading: false });
+
+      return { success: true, workout: updatedWorkout };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to edit workout';
+      set({ isLoading: false, error: errorMessage });
+      return { success: false, error: errorMessage };
+    }
   },
 
   // Clear error

@@ -419,7 +419,6 @@
   transition: all 0.2s ease;
   border: 1px solid rgba(255, 255, 255, 0.05);
 }
-v
 
 .calendar-exercise-item:hover {
   transform: translateX(4px);
@@ -602,4 +601,152 @@ v
 
 .calendar-workout-details-card {
   animation: slide-up 0.3s ease-out;
+}
+
+/* ========================================
+   EDIT MODE
+   ======================================== */
+.calendar-header-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-edit-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 229, 204, 0.1);
+  border: 1px solid rgba(0, 229, 204, 0.3);
+  color: #00E5CC;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.calendar-edit-button:hover {
+  background: rgba(0, 229, 204, 0.2);
+  border-color: #00E5CC;
+}
+
+.calendar-save-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(52, 211, 153, 0.15);
+  border: 1px solid rgba(52, 211, 153, 0.4);
+  color: #34D399;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.calendar-save-button:hover {
+  background: rgba(52, 211, 153, 0.25);
+  border-color: #34D399;
+}
+
+.calendar-cancel-edit-button {
+  width: 32px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #EF4444;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.calendar-cancel-edit-button:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #EF4444;
+}
+
+.calendar-exercise-header-right-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.calendar-delete-exercise-btn {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(239, 68, 68, 0.1);
+  border: 1px solid rgba(239, 68, 68, 0.3);
+  color: #EF4444;
+  cursor: pointer;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.calendar-delete-exercise-btn:hover {
+  background: rgba(239, 68, 68, 0.2);
+}
+
+.calendar-set-edit-inputs {
+  display: flex;
+  align-items: center;
+  gap: 0.375rem;
+}
+
+.calendar-set-input {
+  width: 55px;
+  padding: 0.375rem 0.5rem;
+  background: rgba(0, 0, 0, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
+  color: #FFFFFF;
+  font-size: 0.825rem;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.2s ease;
+  -moz-appearance: textfield;
+}
+
+.calendar-set-input::-webkit-outer-spin-button,
+.calendar-set-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.calendar-set-input:focus {
+  border-color: #00E5CC;
+  box-shadow: 0 0 0 2px rgba(0, 229, 204, 0.15);
+}
+
+.calendar-set-input-separator {
+  font-size: 0.75rem;
+  color: #6B7280;
+  font-weight: 500;
+}
+
+.calendar-delete-set-btn {
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: transparent;
+  border: none;
+  color: #6B7280;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  margin-left: 0.25rem;
+}
+
+.calendar-delete-set-btn:hover {
+  color: #EF4444;
+  background: rgba(239, 68, 68, 0.1);
 }

@@ -136,6 +136,19 @@ const chestExercises = [
     muscleContribution: { chest: 1.0, triceps: 1.0, front_delts: 0.6, core: 0.2 }
   },
   {
+    name: 'Fondos lastrados',
+    category: 'chest',
+    muscleGroup: {
+      primary: ['chest', 'triceps'],
+      secondaryStrong: ['front_delts'],
+      secondaryMedium: [],
+      secondaryLight: ['core']
+    },
+    equipment: 'other',
+    type: 'compound',
+    muscleContribution: { chest: 1.0, triceps: 1.0, front_delts: 0.6, core: 0.2 }
+  },
+  {
     name: 'Flexiones',
     category: 'chest',
     muscleGroup: {
@@ -471,6 +484,19 @@ const backExercises = [
       secondaryLight: ['rear_delts', 'core']
     },
     equipment: 'bodyweight',
+    type: 'compound',
+    muscleContribution: { lats: 1.0, back: 0.6, biceps: 0.4, rear_delts: 0.2, core: 0.2 }
+  },
+  {
+    name: 'Dominadas lastradas',
+    category: 'back',
+    muscleGroup: {
+      primary: ['lats'],
+      secondaryStrong: ['back'],
+      secondaryMedium: ['biceps'],
+      secondaryLight: ['rear_delts', 'core']
+    },
+    equipment: 'other',
     type: 'compound',
     muscleContribution: { lats: 1.0, back: 0.6, biceps: 0.4, rear_delts: 0.2, core: 0.2 }
   },

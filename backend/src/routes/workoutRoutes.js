@@ -12,7 +12,8 @@ import {
   getTodayWorkout,
   reopenWorkout,
   cleanupDuplicateSessions,
-  getExerciseHistory
+  getExerciseHistory,
+  editHistoryWorkout
 } from '../controllers/workoutController.js';
 import { protect } from '../middleware/auth.js';
 
@@ -40,5 +41,6 @@ router.route('/:id')
 router.put('/:id/complete', completeWorkout);
 router.put('/:id/reopen', reopenWorkout);
 router.put('/:id/change-day', changeWorkoutDay);
+router.put('/:id/edit-history', editHistoryWorkout);
 
 export default router;
