@@ -11,7 +11,7 @@
 # 💪 Gymtracker v2
 
 <p align="center">
-  <img src="assets/gym-demo.gif" alt="Demo de Gymtracker v2" width="320"/>
+  <img src="assets/gym-demo.gif" alt="Demo de Gymtracker v2" width="600"/>
 </p>
 
 ## 📜 Sobre el proyecto
