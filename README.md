@@ -10,7 +10,9 @@
 
 # 💪 Gymtracker v2
 
-<!-- TODO: add demo gif of the routine builder + in-session tracker -->
+<p align="center">
+  <img src="assets/gym-demo.gif" alt="Gymtracker v2 demo" width="320"/>
+</p>
 
 ## 📜 About
 
